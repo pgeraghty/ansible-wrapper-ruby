@@ -29,7 +29,7 @@ Ansible::AdHoc.run 'all -i localhost, --list-hosts'
 ```
 
 ```ruby
-Ansible::AdHoc.run 'all -m shell -a "echo Test" -i localhost, '
+Ansible::AdHoc.run 'all -m shell -a "echo Test" -i localhost,'
 ```
 
 ### Playbooks
