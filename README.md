@@ -24,17 +24,23 @@ Or install it yourself as:
 
 ### Ad-hoc commands
 
-``ruby
+```ruby
 Ansible::AdHoc.run 'all -i localhost, --list-hosts'
-``
-``
+```
+
+```ruby
 Ansible::AdHoc.run 'all -m shell -a "echo Test" -i localhost, '
-``
+```
 
 ### Playbooks
 
+```ruby
 Ansible::Playbook.run '-i localhost, spec/mock_playbook.yml'
+```
+
+```ruby
 Ansible::Playbook.stream('-i localhost, spec/mock_playbook.yml') { |line_of_output| puts line_of_output }
+```
 
 ## Coming Soon
 
