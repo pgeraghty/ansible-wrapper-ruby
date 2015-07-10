@@ -1,0 +1,13 @@
+language: ruby
+rvm:
+  - 2.2.2
+
+before_install:
+  # Make sure everything's up to date.
+  - sudo apt-get update -qq
+  - sudo apt-get install python
+  - gem install bundler -v 1.10.5
+
+install:
+  # Install Ansible.
+  - pip install ansible

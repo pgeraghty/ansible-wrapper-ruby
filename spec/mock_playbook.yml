@@ -1,0 +1,11 @@
+---
+
+- name: Testing Playbook
+  hosts: all
+  gather_facts: no
+
+  tasks:
+    - name: Test task
+      register: test_msg
+      changed_when: "'Test' in test_msg.stderr"
+      shell: echo 'Test'
