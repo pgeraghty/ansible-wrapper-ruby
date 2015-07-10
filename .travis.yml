@@ -3,11 +3,13 @@ rvm:
   - 2.2.2
 
 before_install:
-  # Make sure everything's up to date.
+  # make sure everything's up to date
   - sudo apt-get update -qq
+  # install Python
   - sudo apt-get install python
+  # install Bundler
   - gem install bundler -v 1.10.5
 
 install:
-  # Install Ansible.
+  # install Ansible
   - pip install ansible
