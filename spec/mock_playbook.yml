@@ -3,6 +3,7 @@
 - name: Testing Playbook
   hosts: all
   gather_facts: no
+  connection: local
 
   tasks:
     - name: Test task
