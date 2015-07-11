@@ -7,7 +7,7 @@ module Ansible
       cmds = [BIN, cmd]
 
       if opts[:skip_host_key_checking]
-        cmds << 'ANSIBLE_HOST_KEY_CHECKING=False'
+        cmds = ['ANSIBLE_HOST_KEY_CHECKING=False'] + cmds
       end
 
       `#{cmds*' '}`
