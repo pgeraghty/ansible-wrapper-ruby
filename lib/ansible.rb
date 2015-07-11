@@ -9,4 +9,8 @@ module Ansible
   def env_string
     ENV.map { |a| a*'=' }*' '
   end
+
+  def enable_shortcuts!
+    require 'ansible/shortcuts'
+  end
 end
