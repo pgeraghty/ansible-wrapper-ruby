@@ -4,13 +4,9 @@ module Ansible
     BIN = 'ansible'
 
     def run(cmd, opts={})
-      cmds = [BIN, cmd]
+      cmd_line = Ansible.env_string + [BIN, cmd]*' '
 
-      if opts[:skip_host_key_checking]
-        cmds = ['ANSIBLE_HOST_KEY_CHECKING=False'] + cmds
-      end
-
-      `#{cmds*' '}`
+      `#{cmd_line}`
     end
   end
 end

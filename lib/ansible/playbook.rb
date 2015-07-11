@@ -6,24 +6,16 @@ module Ansible
     extend self
 
     def run(cmd, opts={})
-      cmds = [BIN, cmd]
+      cmd_line = Ansible.env_string + ['ANSIBLE_FORCE_COLOR=True', BIN, cmd]*' '
 
-      if opts[:skip_host_key_checking]
-        cmds = ['ANSIBLE_HOST_KEY_CHECKING=False'] + cmds
-      end
-
-      `#{cmds*' '}`
+      `#{cmd_line}`
     end
 
     # This method uses PTY because otherwise output is buffered
     def stream(cmd, opts={}, &block)
-      cmds = ['ANSIBLE_FORCE_COLOR=True', BIN, cmd]
+      cmd_line = Ansible.env_string + ['ANSIBLE_FORCE_COLOR=True', BIN, cmd]*' '
 
-      if opts[:skip_host_key_checking]
-        cmds = ['ANSIBLE_HOST_KEY_CHECKING=False'] + cmds
-      end
-
-      SafePty.spawn(cmds*' ') do |r,w,p|
+      SafePty.spawn(cmd_line) do |r,w,p|
         block_given? ? yield(r.gets) : puts(r.gets) until r.eof?
       end
     end
