@@ -1,6 +1,7 @@
 # Ansible Wrapper
 
 [![Build Status](https://travis-ci.org/pgeraghty/ansible-wrapper-ruby.svg?branch=master)](https://travis-ci.org/pgeraghty/ansible-wrapper-ruby)
+[![Coverage Status](https://coveralls.io/repos/pgeraghty/ansible-wrapper-ruby/badge.svg?branch=master&service=github)](https://coveralls.io/github/pgeraghty/ansible-wrapper-ruby?branch=master)
 
 #### A lightweight Ruby wrapper around Ansible that allows for ad-hoc commands and playbook execution. The primary purpose is to support easy streaming output.
 
