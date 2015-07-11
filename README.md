@@ -1,5 +1,7 @@
 # Ansible Wrapper
 
+[![Build Status](https://travis-ci.org/pgeraghty/ansible-wrapper-ruby.svg?branch=master)](https://travis-ci.org/pgeraghty/ansible-wrapper-ruby)
+
 A lightweight Ruby wrapper around Ansible that allows for ad-hoc commands and playbook execution. The primary purpose is to support easy streaming output.
 
 ## Installation
