@@ -42,13 +42,34 @@ Ansible::Playbook.run '-i localhost, spec/mock_playbook.yml'
 ```
 
 ```ruby
+Ansible::Playbook.stream('-i localhost, spec/mock_playbook.yml') # defaults to standard output
+```
+
+```ruby
 Ansible::Playbook.stream('-i localhost, spec/mock_playbook.yml') { |line_of_output| puts line_of_output }
+```
+
+### Shortcuts
+
+To enable shortcuts:
+
+```ruby
+Ansible.enable_shortcuts!
+```
+
+You can then access Ansible via the `A` alias and use the following syntax:
+
+```ruby
+A['all -i localhost, --list-hosts'] # alias for Ansible::AdHoc.run
+```
+
+```ruby
+A << '-i localhost, spec/mock_playbook.yml' # alias for Ansible::Playbook.stream
 ```
 
 ## Coming Soon
 
 * Streaming output example using Sinatra
-* Optional shortcuts
 
 ## Development
 
