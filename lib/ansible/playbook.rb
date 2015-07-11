@@ -23,7 +23,9 @@ module Ansible
         cmds = ['ANSIBLE_HOST_KEY_CHECKING=False'] + cmds
       end
 
-      SafePty.spawn(cmds*' ') { |r,w,p| yield r.gets until r.eof? }
+      SafePty.spawn(cmds*' ') do |r,w,p|
+        block_given? ? yield(r.gets) : puts(r.gets) until r.eof?
+      end
     end
   end
 end
