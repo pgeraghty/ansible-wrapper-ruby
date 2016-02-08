@@ -3,6 +3,7 @@
 [![Gem Version](https://badge.fury.io/rb/ansible-wrapper.svg)](http://badge.fury.io/rb/ansible-wrapper)
 [![Build Status](https://travis-ci.org/pgeraghty/ansible-wrapper-ruby.svg?branch=master)](https://travis-ci.org/pgeraghty/ansible-wrapper-ruby)
 [![Coverage Status](https://coveralls.io/repos/pgeraghty/ansible-wrapper-ruby/badge.svg?branch=master&service=github)](https://coveralls.io/github/pgeraghty/ansible-wrapper-ruby?branch=master)
+[![Code Climate](https://codeclimate.com/github/pgeraghty/ansible-wrapper-ruby/badges/gpa.svg)](https://codeclimate.com/github/pgeraghty/ansible-wrapper-ruby)
 
 #### A lightweight Ruby wrapper around Ansible that allows for ad-hoc commands and playbook execution. The primary purpose is to support easy streaming output.
 
