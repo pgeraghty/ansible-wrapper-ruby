@@ -9,7 +9,7 @@ module Ansible
     end
 
     it 'can execute a basic Ansible Playbook' do
-      expect(Playbook.run '-i localhost, spec/mock_playbook.yml').to match /TASK: \[Test task\]/
+      expect(Playbook.run '-i localhost, spec/mock_playbook.yml').to match /TASK(.?) \[Test task\]/
     end
 
     it 'can stream the output from execution of an Ansible Playbook' do
