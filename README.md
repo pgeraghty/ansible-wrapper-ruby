@@ -7,9 +7,12 @@
 
 #### A lightweight Ruby wrapper around Ansible that allows for ad-hoc commands and playbook execution. The primary purpose is to support easy streaming output.
 
-## Installation
+## Requirements
 
 Ensure [Ansible](http://docs.ansible.com/intro_getting_started.html) is installed and available to shell commands i.e. in PATH.
+[Tested](https://travis-ci.org/pgeraghty/ansible-wrapper-ruby) with Ansible versions 1.9.4 and 2.0.0.2, but please create an issue if you use a version that fails.
+
+## Installation
 
 Add this line to your application's Gemfile:
 
