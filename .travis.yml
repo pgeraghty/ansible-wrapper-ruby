@@ -1,9 +1,12 @@
 language: ruby
 env:
+  - ANSIBLE_VERSION=1.8.4
   - ANSIBLE_VERSION=1.9.4
   - ANSIBLE_VERSION=2.0.0.2
 rvm:
+  - 2.1.8
   - 2.2.4
+  - 2.3.0
 cache: bundler
 before_install:
   # make sure everything's up to date
