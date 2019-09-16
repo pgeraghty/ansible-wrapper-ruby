@@ -16,14 +16,14 @@ module Ansible
       cmd = '-i localhost, spec/mock_playbook.yml'
 
       expect { |b| Playbook.stream cmd, &b }.to yield_control
-      expect(Playbook.stream(cmd) { |l| next }).to be_a Fixnum
+      expect(Playbook.stream(cmd) { |l| next }).to be_a Integer
       expect(Playbook.stream(cmd) { |l| break l if l[/PLAY \[Testing Playbook\]/] }).to match /Testing Playbook/
     end
 
     it 'defaults to standard output when streaming an Ansible Playbook if no block is given' do
       cmd = '-i localhost, spec/mock_playbook.yml'
 
-      expect(Playbook.stream cmd).to be_a Fixnum
+      expect(Playbook.stream cmd).to be_a Integer
     end
   end
 end
