@@ -1,0 +1,30 @@
+name: Test using different Ansible & Ruby versions
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        ansible:
+          - 2.0.2
+          - 2.1.6
+          - 2.2.3
+          - 2.3.3
+          - 2.4.6
+          - 2.5.15
+          - 2.6.19
+          - 2.7.12
+          - 2.8.5
+        ruby:
+          - 2.1.10
+          - 2.2.7
+          - 2.3.7
+          - 2.4.7
+          - 2.5.6
+          - 2.6.4
+    steps:
+      - uses: actions/checkout@v1
+      - name: Run tests
+        run: RUBY_VERSION=${{ matrix.ruby }} ANSIBLE_VERSION=${{ matrix.ansible }} && docker run --rm -v $PWD:/app pgeraghty/ansible-ruby:$RUBY_VERSION-$ANSIBLE_VERSION /bin/sh -c "cd /app && bundle install --jobs=3 --retry=3 && rake"
