@@ -1,4 +1,6 @@
-language: ruby
+language: minimal
+services:
+  - docker
 env:
   - ANSIBLE_VERSION=2.0.2
   - ANSIBLE_VERSION=2.1.6
@@ -9,20 +11,11 @@ env:
   - ANSIBLE_VERSION=2.6.19
   - ANSIBLE_VERSION=2.7.12
   - ANSIBLE_VERSION=2.8.5
-rvm:
-  - 2.1.10
-  - 2.2.7
-  - 2.3.7
-  - 2.4.7
-  - 2.5.6
-  - 2.6.4
-cache: bundler
-before_install:
-  # make sure everything's up to date
-  - sudo apt-get update -qq
-  # install Python
-  - sudo apt-get install python
-  # upgrade pip
-  - sudo pip install --upgrade pip
-  # install Ansible
-  - sudo pip install ansible==$ANSIBLE_VERSION
+  - RUBY_VERSION=2.1.10
+  - RUBY_VERSION=2.2.7
+  - RUBY_VERSION=2.3.7
+  - RUBY_VERSION=2.4.7
+  - RUBY_VERSION=2.5.6
+  - RUBY_VERSION=2.6.4
+script:
+  - docker run --rm -it -v $PWD:/app pgeraghty/ansible-ruby:$RUBY_VERSION-$ANSIBLE_VERSION /bin/sh -c cd /app && bundle install --jobs=3 --retry=3 --deployment && rake
