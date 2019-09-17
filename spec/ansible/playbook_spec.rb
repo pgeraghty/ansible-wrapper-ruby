@@ -38,7 +38,7 @@ module Ansible
 
       it 'returns a warning as part of the output when the inventory does not exist' do
         # TODO should probably raise an error for this behaviour (perhaps switch to pending)
-        expect { Playbook.stream '-i localhost spec/mock_playbook.yml' }.to output(/Unable to parse/).to_stdout
+        expect { Playbook.stream '-i localhost spec/mock_playbook.yml' }.to output(/Unable to parse|Host file not found/).to_stdout
       end
     end
   end
