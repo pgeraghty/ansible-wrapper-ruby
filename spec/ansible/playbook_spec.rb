@@ -1,7 +1,7 @@
 module Ansible
   describe Playbook do
     before do
-      Ansible::ENV['ANSIBLE_HOST_KEY_CHECKING'] = 'False'
+      disable_host_key_checking
     end
 
     it 'can execute a basic Ansible Playbook command on localhost' do

@@ -1,6 +1,6 @@
 require 'pty'
 
-module SafePty
+module Ansible::SafePty
   def self.spawn(command)
 
     PTY.spawn(command) do |r,w,p|

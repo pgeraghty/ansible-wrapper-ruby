@@ -3,7 +3,7 @@ require 'spec_helper'
 module Ansible
   describe AdHoc do
     before do
-      Ansible::ENV['ANSIBLE_HOST_KEY_CHECKING'] = 'False'
+      disable_host_key_checking
     end
 
     it 'can execute a basic ad-hoc Ansible command on localhost' do

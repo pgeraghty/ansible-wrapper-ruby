@@ -1,23 +1,34 @@
 require 'ansible/safe_pty'
 
-module Ansible
-  module Playbook
-    BIN = 'ansible-playbook'
-    extend self
+module Ansible::PlaybookMethods
+  BIN = 'ansible-playbook'
 
-    def run(cmd, _opts={})
-      cmd_line =  [Ansible.env_string, 'ANSIBLE_FORCE_COLOR=True', BIN, cmd]*' '
+  def playbook pb
+    `#{config.to_s "#{BIN} #{pb}"}`
+  end
+  alias :<< :playbook
 
-      `#{cmd_line}`
-    end
+  def stream pb
+    # Use PTY because otherwise output is buffered
+    Ansible::SafePty.spawn config.to_s("#{BIN} #{pb}") do |r,w,p| # add -vvvv here for verbose
+      until r.eof? do
+        line = r.gets
+        block_given? ? yield(line) : puts(line)
 
-    # This method uses PTY because otherwise output is buffered
-    def stream(cmd, _opts={})
-      cmd_line = [Ansible.env_string, 'ANSIBLE_FORCE_COLOR=True', BIN, cmd]*' '
-
-      SafePty.spawn(cmd_line) do |r,_w,_p|
-        block_given? ? yield(r.gets) : puts(r.gets) until r.eof?
+        raise "FAILED: #{line}" if line.include?('fatal: [')
+        # TODO raise if contains FAILED!
+        # TODO raise if contains ERROR!
       end
     end
+  end
+end
+
+module Ansible
+  module Playbook
+    include Ansible::Config
+    include Ansible::PlaybookMethods
+
+    extend self
+    alias :run :playbook
   end
 end

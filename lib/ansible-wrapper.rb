@@ -1,14 +1,15 @@
 require 'ansible/version'
+require 'ansible/config'
 require 'ansible/ad_hoc'
 require 'ansible/playbook'
+require 'ansible/output'
 
 module Ansible
-  extend self
-  ENV = {}
+  include Ansible::Config
+  include Ansible::Methods
+  include Ansible::PlaybookMethods
 
-  def env_string
-    ENV.map { |a| a*'=' }*' '
-  end
+  extend self
 
   def enable_shortcuts!
     require 'ansible/shortcuts'
