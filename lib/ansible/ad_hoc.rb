@@ -16,7 +16,7 @@ module Ansible::Methods
     cmd = "all -m debug -a 'var=#{hostvars_filter}' -i #{inv_file} -l #{host} --one-line"
     hostvars = JSON.parse(self[cmd].split(/>>|=>/).last)
 
-    if Gem::Version.new(Ansible::VERSION) >= Gem::Version.new('2.0')
+    if Gem::Version.new(Ansible::Config::VERSION) >= Gem::Version.new('2.0')
       hostvars[hostvars_filter]
     else
       hostvars['var'][hostvars_filter]
