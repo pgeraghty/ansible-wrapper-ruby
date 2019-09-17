@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Ansible do
   it 'has a version number' do
-    expect(Ansible::VERSION).not_to be nil
+    expect(Ansible::Config::VERSION).not_to be nil
   end
 
   it 'can configure environment variables' do
@@ -15,6 +15,7 @@ describe Ansible do
     expect(Ansible.config.to_s '').to include('SOME_ENV_VAR=False')
   end
 
+  before { suppress_output }
   it 'can run via shortcut methods when enabled' do
     Ansible.enable_shortcuts!
     disable_host_key_checking
@@ -24,6 +25,7 @@ describe Ansible do
     expect(A['all -i localhost, --list-hosts']).to match /localhost/
   end
 
+  before { suppress_output }
   it 'can be included' do
     module Nodes
       include Ansible

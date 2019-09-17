@@ -7,3 +7,8 @@ require 'ansible-wrapper'
 def disable_host_key_checking
   Ansible.configure { |config| config.env['ANSIBLE_HOST_KEY_CHECKING'] = 'False' }
 end
+
+def suppress_output
+  allow($stdout).to receive(:puts)
+  allow($stdout).to receive(:write)
+end
