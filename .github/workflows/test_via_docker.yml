@@ -17,14 +17,17 @@ jobs:
           - 2.6.19
           - 2.7.12
           - 2.8.5
-        ruby:
-          - 2.1.10
-          - 2.2.7
-          - 2.3.7
-          - 2.4.7
-          - 2.5.6
-          - 2.6.4
     steps:
       - uses: actions/checkout@v1
-      - name: Run tests
-        run: RUBY_VERSION=${{ matrix.ruby }} ANSIBLE_VERSION=${{ matrix.ansible }} && docker run --rm -v $PWD:/app pgeraghty/ansible-ruby:$RUBY_VERSION-$ANSIBLE_VERSION /bin/sh -c "cd /app && bundle install --jobs=3 --retry=3 && rake"
+      - name: Run tests against Ruby 2.6.4
+        run: RUBY_VERSION=2.6.4 ANSIBLE_VERSION=${{ matrix.ansible }} && docker run --rm -v $PWD:/app pgeraghty/ansible-ruby:$RUBY_VERSION-$ANSIBLE_VERSION /bin/sh -c "cd /app && bundle install --jobs=3 --retry=3 && rake"
+      - name: Run tests against Ruby 2.5.6
+        run: RUBY_VERSION=2.5.6 ANSIBLE_VERSION=${{ matrix.ansible }} && docker run --rm -v $PWD:/app pgeraghty/ansible-ruby:$RUBY_VERSION-$ANSIBLE_VERSION /bin/sh -c "cd /app && bundle install --jobs=3 --retry=3 && rake"
+      - name: Run tests against Ruby 2.4.7
+        run: RUBY_VERSION=2.4.7 ANSIBLE_VERSION=${{ matrix.ansible }} && docker run --rm -v $PWD:/app pgeraghty/ansible-ruby:$RUBY_VERSION-$ANSIBLE_VERSION /bin/sh -c "cd /app && bundle install --jobs=3 --retry=3 && rake"
+      - name: Run tests against Ruby 2.3.7
+        run: RUBY_VERSION=2.3.7 ANSIBLE_VERSION=${{ matrix.ansible }} && docker run --rm -v $PWD:/app pgeraghty/ansible-ruby:$RUBY_VERSION-$ANSIBLE_VERSION /bin/sh -c "cd /app && bundle install --jobs=3 --retry=3 && rake"
+      - name: Run tests against Ruby 2.2.7
+        run: RUBY_VERSION=2.2.7 ANSIBLE_VERSION=${{ matrix.ansible }} && docker run --rm -v $PWD:/app pgeraghty/ansible-ruby:$RUBY_VERSION-$ANSIBLE_VERSION /bin/sh -c "cd /app && bundle install --jobs=3 --retry=3 && rake"
+      - name: Run tests against Ruby 2.1.10
+        run: RUBY_VERSION=2.1.10 ANSIBLE_VERSION=${{ matrix.ansible }} && docker run --rm -v $PWD:/app pgeraghty/ansible-ruby:$RUBY_VERSION-$ANSIBLE_VERSION /bin/sh -c "cd /app && bundle install --jobs=3 --retry=3 && rake"
