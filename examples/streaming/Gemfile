@@ -1,0 +1,6 @@
+source 'https://rubygems.org'
+
+gem 'sinatra'
+gem 'thin'
+
+gem 'ansible-wrapper', path: '../../' #github: 'pgeraghty/ansible-wrapper-ruby'
