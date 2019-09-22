@@ -21,28 +21,37 @@ jobs:
       - uses: actions/checkout@v1
       - name: Test against Ruby 2.6.4
         env:
+          RUBY_VERSION: 2.6.4
+          ANSIBLE_VERSION: ${{ matrix.ansible }}
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
-        run: RUBY_VERSION=2.6.4 ANSIBLE_VERSION=${{ matrix.ansible }} && docker run -e COVERALLS_REPO_TOKEN --rm -v $PWD:/app pgeraghty/ansible-ruby:$RUBY_VERSION-$ANSIBLE_VERSION /bin/sh -c "cd /app && bundle install --jobs=3 --retry=3 && CI=true rake"
+        run: docker run -e COVERALLS_REPO_TOKEN --rm -v $PWD:/app pgeraghty/ansible-ruby:$RUBY_VERSION-$ANSIBLE_VERSION /bin/sh -c "cd /app && bundle install --jobs=3 --retry=3 && COVERALLS_RUN_LOCALLY=true bundle exec rake"
 
       - name: Test against Ruby 2.5.6
         env:
-          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
-        run: RUBY_VERSION=2.5.6 ANSIBLE_VERSION=${{ matrix.ansible }} && docker run -e COVERALLS_REPO_TOKEN --rm -v $PWD:/app pgeraghty/ansible-ruby:$RUBY_VERSION-$ANSIBLE_VERSION /bin/sh -c "cd /app && bundle install --jobs=3 --retry=3 && CI=true rake"
+          RUBY_VERSION: 2.5.6
+          ANSIBLE_VERSION: ${{ matrix.ansible }}
+        run: docker run --rm -v $PWD:/app pgeraghty/ansible-ruby:$RUBY_VERSION-$ANSIBLE_VERSION /bin/sh -c "cd /app && bundle install --jobs=3 --retry=3 && bundle exec rake"
 
       - name: Test against Ruby 2.4.7
         env:
-          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
-        run: RUBY_VERSION=2.4.7 ANSIBLE_VERSION=${{ matrix.ansible }} && docker run -e COVERALLS_REPO_TOKEN --rm -v $PWD:/app pgeraghty/ansible-ruby:$RUBY_VERSION-$ANSIBLE_VERSION /bin/sh -c "cd /app && bundle install --jobs=3 --retry=3 && CI=true rake"
+          RUBY_VERSION: 2.4.7
+          ANSIBLE_VERSION: ${{ matrix.ansible }}
+        run: docker run --rm -v $PWD:/app pgeraghty/ansible-ruby:$RUBY_VERSION-$ANSIBLE_VERSION /bin/sh -c "cd /app && bundle install --jobs=3 --retry=3 && bundle exec rake"
 
       - name: Test against Ruby 2.3.7
         env:
-          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
-        run: RUBY_VERSION=2.3.7 ANSIBLE_VERSION=${{ matrix.ansible }} && docker run -e COVERALLS_REPO_TOKEN --rm -v $PWD:/app pgeraghty/ansible-ruby:$RUBY_VERSION-$ANSIBLE_VERSION /bin/sh -c "cd /app && bundle install --jobs=3 --retry=3 && CI=true rake"
+          RUBY_VERSION: 2.3.7
+          ANSIBLE_VERSION: ${{ matrix.ansible }}
+        run: docker run --rm -v $PWD:/app pgeraghty/ansible-ruby:$RUBY_VERSION-$ANSIBLE_VERSION /bin/sh -c "cd /app && bundle install --jobs=3 --retry=3 && bundle exec rake"
 
       - name: Test against Ruby 2.2.7
-        run: RUBY_VERSION=2.2.7 ANSIBLE_VERSION=${{ matrix.ansible }} && docker run -e COVERALLS_REPO_TOKEN --rm -v $PWD:/app pgeraghty/ansible-ruby:$RUBY_VERSION-$ANSIBLE_VERSION /bin/sh -c "cd /app && bundle install --jobs=3 --retry=3 && CI=true rake"
+        env:
+          RUBY_VERSION: 2.2.7
+          ANSIBLE_VERSION: ${{ matrix.ansible }}
+        run: docker run --rm -v $PWD:/app pgeraghty/ansible-ruby:$RUBY_VERSION-$ANSIBLE_VERSION /bin/sh -c "cd /app && bundle install --jobs=3 --retry=3 && bundle exec rake"
 
       - name: Test against Ruby 2.1.10
         env:
-          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
-        run: RUBY_VERSION=2.1.10 ANSIBLE_VERSION=${{ matrix.ansible }} && docker run -e COVERALLS_REPO_TOKEN --rm -v $PWD:/app pgeraghty/ansible-ruby:$RUBY_VERSION-$ANSIBLE_VERSION /bin/sh -c "cd /app && bundle install --jobs=3 --retry=3 && CI=true rake"
+          RUBY_VERSION: 2.1.10
+          ANSIBLE_VERSION: ${{ matrix.ansible }}
+        run: docker run --rm -v $PWD:/app pgeraghty/ansible-ruby:$RUBY_VERSION-$ANSIBLE_VERSION /bin/sh -c "cd /app && bundle install --jobs=3 --retry=3 && bundle exec rake"
