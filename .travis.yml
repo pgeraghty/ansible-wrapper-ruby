@@ -2,19 +2,32 @@ language: bash
 services:
   - docker
 env:
-  - ANSIBLE_VERSION=2.0.2
-  - ANSIBLE_VERSION=2.1.6
-  - ANSIBLE_VERSION=2.2.3
-  - ANSIBLE_VERSION=2.3.3
-  - ANSIBLE_VERSION=2.4.6
-  - ANSIBLE_VERSION=2.5.15
-  - ANSIBLE_VERSION=2.6.19
-  - ANSIBLE_VERSION=2.7.12
   - ANSIBLE_VERSION=2.8.5
+  - ANSIBLE_VERSION=2.7.12
+  - ANSIBLE_VERSION=2.6.19
+  - ANSIBLE_VERSION=2.5.15
+  - ANSIBLE_VERSION=2.4.6
+  - ANSIBLE_VERSION=2.3.3
+  - ANSIBLE_VERSION=2.2.3
+  - ANSIBLE_VERSION=2.1.6
+  - ANSIBLE_VERSION=2.0.2
 script:
-  - RUBY=2.6.4 && docker run --rm -e TRAVIS -e TRAVIS_JOB_ID -e TRAVIS_BRANCH -e TRAVIS_PULL_REQUEST -it -v $PWD:/app pgeraghty/ansible-ruby:$RUBY-$ANSIBLE_VERSION /bin/sh -c "cd /app && bundle install --jobs=3 --retry=3 && CI=true bundle exec rake"
-  - RUBY=2.5.6 && docker run --rm -it -v $PWD:/app pgeraghty/ansible-ruby:$RUBY-$ANSIBLE_VERSION /bin/sh -c "cd /app && bundle install --jobs=3 --retry=3 && bundle exec rake"
-  - RUBY=2.4.7 && docker run --rm -it -v $PWD:/app pgeraghty/ansible-ruby:$RUBY-$ANSIBLE_VERSION /bin/sh -c "cd /app && bundle install --jobs=3 --retry=3 && bundle exec rake"
-  - RUBY=2.3.7 && docker run --rm -it -v $PWD:/app pgeraghty/ansible-ruby:$RUBY-$ANSIBLE_VERSION /bin/sh -c "cd /app && bundle install --jobs=3 --retry=3 && bundle exec rake"
-  - RUBY=2.2.7 && docker run --rm -it -v $PWD:/app pgeraghty/ansible-ruby:$RUBY-$ANSIBLE_VERSION /bin/sh -c "cd /app && bundle install --jobs=3 --retry=3 && bundle exec rake"
-  - RUBY=2.1.10 && docker run --rm -it -v $PWD:/app pgeraghty/ansible-ruby:$RUBY-$ANSIBLE_VERSION /bin/sh -c "cd /app && bundle install --jobs=3 --retry=3 && bundle exec rake"
+  - >
+    RUBY=2.6.4 && docker run --rm -e TRAVIS -e TRAVIS_JOB_ID -e TRAVIS_BRANCH -e TRAVIS_PULL_REQUEST -it
+    -v $PWD:/app pgeraghty/ansible-ruby:$RUBY-$ANSIBLE_VERSION /bin/sh -c
+    "cd /app && bundle install --jobs=3 --retry=3 && CI=true bundle exec rake"
+  - >
+    RUBY=2.5.6 && docker run --rm -it -v $PWD:/app pgeraghty/ansible-ruby:$RUBY-$ANSIBLE_VERSION
+    /bin/sh -c "cd /app && bundle install --jobs=3 --retry=3 && bundle exec rake"
+  - >
+    RUBY=2.4.7 && docker run --rm -it -v $PWD:/app pgeraghty/ansible-ruby:$RUBY-$ANSIBLE_VERSION
+    /bin/sh -c "cd /app && bundle install --jobs=3 --retry=3 && bundle exec rake"
+  - >
+    RUBY=2.3.7 && docker run --rm -it -v $PWD:/app pgeraghty/ansible-ruby:$RUBY-$ANSIBLE_VERSION
+    /bin/sh -c "cd /app && bundle install --jobs=3 --retry=3 && bundle exec rake"
+  - >
+    RUBY=2.2.7 && docker run --rm -it -v $PWD:/app pgeraghty/ansible-ruby:$RUBY-$ANSIBLE_VERSION
+    /bin/sh -c "cd /app && bundle install --jobs=3 --retry=3 && bundle exec rake"
+  - >
+    RUBY=2.1.10 && docker run --rm -it -v $PWD:/app pgeraghty/ansible-ruby:$RUBY-$ANSIBLE_VERSION
+    /bin/sh -c "cd /app && bundle install --jobs=3 --retry=3 && bundle exec rake"
