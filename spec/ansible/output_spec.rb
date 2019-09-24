@@ -74,7 +74,7 @@ module Ansible
            output << Ansible::Output.to_html(line)
          end
 
-          expect(output).to match /<span style="color: green;">ok=1/
+          expect(output).to match /<span style="color: green;">ok/
         end
 
         context 'for a non-existent playbook' do
