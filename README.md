@@ -43,15 +43,15 @@ Ansible::AdHoc.run 'all -m shell -a "echo Test" -i localhost,'
 ### Playbooks
 
 ```ruby
-Ansible::Playbook.run '-i localhost, spec/mock_playbook.yml'
+Ansible::Playbook.run '-i localhost, spec/fixtures/mock_playbook.yml'
 ```
 
 ```ruby
-Ansible::Playbook.stream('-i localhost, spec/mock_playbook.yml') # defaults to standard output
+Ansible::Playbook.stream('-i localhost, spec/fixtures/mock_playbook.yml') # defaults to standard output
 ```
 
 ```ruby
-Ansible::Playbook.stream('-i localhost, spec/mock_playbook.yml') { |line_of_output| puts line_of_output }
+Ansible::Playbook.stream('-i localhost, spec/fixtures/mock_playbook.yml') { |line_of_output| puts line_of_output }
 ```
 
 ### Shortcuts
@@ -69,7 +69,7 @@ A['all -i localhost, --list-hosts'] # alias for Ansible::AdHoc.run
 ```
 
 ```ruby
-A << '-i localhost, spec/mock_playbook.yml' # alias for Ansible::Playbook.stream
+A << '-i localhost, spec/fixtures/mock_playbook.yml' # alias for Ansible::Playbook.stream
 ```
 
 ## Coming Soon

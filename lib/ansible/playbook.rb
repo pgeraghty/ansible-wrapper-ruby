@@ -1,3 +1,4 @@
+require 'ansible/config'
 require 'ansible/safe_pty'
 
 module Ansible

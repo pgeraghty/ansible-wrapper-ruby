@@ -20,7 +20,7 @@ describe Ansible do
     Ansible.enable_shortcuts!
     disable_host_key_checking
 
-    cmd = '-i localhost, spec/mock_playbook.yml'
+    cmd = '-i localhost, spec/fixtures/mock_playbook.yml'
     expect(A << cmd).to be_a Integer
     expect(A['all -i localhost, --list-hosts']).to match /localhost/
   end
@@ -33,7 +33,7 @@ describe Ansible do
       extend self
 
       def install!(ip)
-        stream ['-i', ip, 'spec/mock_playbook.yml']*' '
+        stream ['-i', ip, 'spec/fixtures/mock_playbook.yml']*' '
       end
     end
 

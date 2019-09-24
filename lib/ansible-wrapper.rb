@@ -1,5 +1,4 @@
 require 'ansible/version'
-require 'ansible/config'
 require 'ansible/ad_hoc'
 require 'ansible/playbook'
 require 'ansible/output'

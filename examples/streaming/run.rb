@@ -63,7 +63,7 @@ get '/streaming' do
   #content_type 'text/plain'
   stream do |out|
     out << CONSOLE_OUTPUT_START
-    Ansible.stream ['-i', 'localhost,', File.expand_path('../../../spec/mock_playbook.yml', __FILE__)]*' ' do |line|
+    Ansible.stream ['-i', 'localhost,', File.expand_path('../../../spec/fixtures/mock_playbook.yml', __FILE__)]*' ' do |line|
       Ansible::Output.to_html line, out
     end
     out << CONSOLE_OUTPUT_END
