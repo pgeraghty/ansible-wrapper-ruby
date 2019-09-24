@@ -20,7 +20,7 @@ module Ansible
       s = StringScanner.new(ERB::Util.h line)
       while(!s.eos?)
         if s.scan(/\e\[([0-1])?[;]?(3[0-7]|90|1)m/)
-          bold, colour = s.captures
+          bold, colour = s[1], s[2]
           styles = []
 
           styles << COLOR[bold] if bold.to_i == 1

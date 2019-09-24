@@ -58,9 +58,10 @@ module Ansible
         it 'handles situations where no style attribute should be added to the tag' do
           output = "\e[0;99Nothing\e[0m"
 
-          s = instance_double("StringScanner", captures: [])
+          s = instance_double("StringScanner")
           allow(s).to receive(:eos?).and_return(false, true)
           allow(s).to receive(:scan).and_return(true, '')
+          allow(s).to receive(:[]).and_return(nil, nil)
 
           class_double("StringScanner", new: s).as_stubbed_const
 
