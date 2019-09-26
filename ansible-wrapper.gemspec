@@ -3,6 +3,8 @@ lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'ansible/version'
 
+# TODO set required ruby version??
+
 Gem::Specification.new do |spec|
   spec.name          = 'ansible-wrapper'
   spec.version       = Ansible::VERSION

@@ -1,0 +1,10 @@
+---
+
+- name: Testing Playbook
+  hosts: all
+  gather_facts: no
+  connection: ssh
+
+  tasks:
+    - name: Test task
+      ping:

@@ -1,6 +1,10 @@
 require 'pty'
 
+# Wrapper for PTY pseudo-terminal
 module Ansible::SafePty
+  # Spawns process for command
+  # @param command [String] command
+  # @return [Integer] exit status
   def self.spawn(command)
 
     PTY.spawn(command) do |r,w,p|

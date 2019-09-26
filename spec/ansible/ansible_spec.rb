@@ -12,7 +12,11 @@ describe Ansible do
       Ansible.configure { |config| config.env['SOME_ENV_VAR'] = 'False' }
     }.to change { Ansible.config.env['SOME_ENV_VAR'] }.from(nil).to('False')
 
-    expect(Ansible.config.to_s '').to include('SOME_ENV_VAR=False')
+    expect(Ansible.config.to_s '').to include 'SOME_ENV_VAR=False'
+  end
+
+  pending 'check Config params debug output' do
+    fail
   end
 
   before { suppress_output }

@@ -4,13 +4,14 @@
 [![Build Status](https://travis-ci.com/pgeraghty/ansible-wrapper-ruby.svg?branch=master)](https://travis-ci.com/pgeraghty/ansible-wrapper-ruby)
 [![Coverage Status](https://coveralls.io/repos/github/pgeraghty/ansible-wrapper-ruby/badge.svg?branch=master)](https://coveralls.io/github/pgeraghty/ansible-wrapper-ruby?branch=master)
 [![Code Climate](https://codeclimate.com/github/pgeraghty/ansible-wrapper-ruby/badges/gpa.svg)](https://codeclimate.com/github/pgeraghty/ansible-wrapper-ruby)
+[![Documentation](http://inch-ci.org/github/pgeraghty/ansible-wrapper-ruby.svg?branch=master)](http://inch-ci.org/github/pgeraghty/ansible-wrapper-ruby)
 
 #### A lightweight Ruby wrapper around Ansible that allows for ad-hoc commands and playbook execution. The primary purpose is to support easy streaming output.
 
 ## Requirements
 
 Ensure [Ansible](http://docs.ansible.com/intro_getting_started.html) is installed and available to shell commands i.e. in PATH.
-[Tested](https://travis-ci.org/pgeraghty/ansible-wrapper-ruby) with Ansible versions 1.9.4 and 2.0.0.2, but please create an issue if you use a version that fails.
+[Tested](https://travis-ci.org/pgeraghty/ansible-wrapper-ruby) with Ansible versions 2.0.2 thru 2.8.5 and Ruby 2.1+, but please create an issue if you use a version that fails.
 
 ## Installation
 
@@ -72,9 +73,9 @@ A['all -i localhost, --list-hosts'] # alias for Ansible::AdHoc.run
 A << '-i localhost, spec/fixtures/mock_playbook.yml' # alias for Ansible::Playbook.stream
 ```
 
-## Coming Soon
+## Examples
 
-* Streaming output example using Sinatra
+* For a streaming output example using Sinatra, see the [examples/streaming](examples/streaming) folder.
 
 ## Development
 

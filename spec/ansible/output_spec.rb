@@ -21,27 +21,27 @@ module Ansible
 
         it 'closes a span tag when the appropriate sequence is detected' do
           output = "\e[32mGreen\e[0m"
-          expect(Output.to_html output).to match /<span style="color: green;">Green<\/span>/
+          expect(Output.to_html output).to eq %{<span style="color: green;">Green</span>}
         end
 
         it 'ignores unstyled text after an escape sequence' do
           output = "\e[90mGrey\e[0mDefault"
-          expect(Output.to_html output).to match /<span style="color: grey;">Grey<\/span>Default/
+          expect(Output.to_html output).to eq %{<span style="color: grey;">Grey</span>Default}
         end
 
         it 'ignores newlines' do
           output = "\e[32mGreen\e[0m\n"
-          expect(Output.to_html output).to match /<span style="color: green;">Green<\/span>\n/
+          expect(Output.to_html output).to eq %{<span style="color: green;">Green</span>\n}
         end
 
         it 'ignores tags left open' do
           output = "\e[0m\n\e[0;32mGreen\e[0m\n\e[0;34mBlue"
-          expect(Output.to_html output).to match /<\/span>\n<span style="color: green;">Green<\/span>\n<span style="color: blue;">Blue/
+          expect(Output.to_html output).to eq %{</span>\n<span style="color: green;">Green</span>\n<span style="color: blue;">Blue}
         end
 
         it 'handles bold output alongside colour with dual styles in a single tag' do
           output = "\e[1;35mBold Magenta\e[0m"
-          expect(Output.to_html output).to eq "<span style=\"font-weight: bold; color: magenta;\">Bold Magenta</span>"
+          expect(Output.to_html output).to eq %{<span style="font-weight: bold; color: magenta;">Bold Magenta</span>}
         end
 
         it 'scrubs unsupported escape sequences' do
@@ -70,10 +70,20 @@ module Ansible
 
         it 'correctly formats output of a streamed playbook' do
          output = ''
-         Ansible.stream(['-i', 'localhost,', 'spec/fixtures/mock_playbook.yml']*' ') do |line|
+         Ansible.stream('-i localhost, spec/fixtures/mock_playbook.yml') do |line|
            output << Ansible::Output.to_html(line)
          end
 
+          expect(output).to match /<span style="color: green;">ok/
+        end
+
+        it 'includes original stream content alongside formatted output of a streamed playbook' do
+          output = '<h1>Some tag</h1>'
+          Ansible.stream('-i localhost, spec/fixtures/mock_playbook.yml') do |line|
+            Ansible::Output.to_html(line, output)
+          end
+
+          expect(output).to match /^<h1>Some tag<\/h1>/
           expect(output).to match /<span style="color: green;">ok/
         end
 
@@ -82,7 +92,7 @@ module Ansible
 
           it 'raises an error' do
             expect {
-              Ansible.stream(['-i', 'localhost,', 'does_not_exist.yml']*' ') do |line|
+              Ansible.stream('-i localhost, does_not_exist.yml') do |line|
                 output << Ansible::Output.to_html(line)
               end
             }.to raise_error(Ansible::Playbook::Exception, /ERROR! the playbook: does_not_exist.yml could not be found/)
