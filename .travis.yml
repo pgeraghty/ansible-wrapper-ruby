@@ -2,20 +2,28 @@ language: bash
 services:
   - docker
 env:
-  - ANSIBLE_VERSION=2.8.5
-  - ANSIBLE_VERSION=2.7.12
-  - ANSIBLE_VERSION=2.6.19
-  - ANSIBLE_VERSION=2.5.15
-  - ANSIBLE_VERSION=2.4.6
-  - ANSIBLE_VERSION=2.3.3
-  - ANSIBLE_VERSION=2.2.3
-  - ANSIBLE_VERSION=2.1.6
-  - ANSIBLE_VERSION=2.0.2
+  global:
+    - CC_TEST_REPORTER_ID=2c0e6ce9e61357e6f15cf76a915b3868235d93e0b849218220242e456bfaa2aa
+  matrix:
+    - ANSIBLE_VERSION=2.8.5
+    - ANSIBLE_VERSION=2.7.12
+    - ANSIBLE_VERSION=2.6.19
+    - ANSIBLE_VERSION=2.5.15
+    - ANSIBLE_VERSION=2.4.6
+    - ANSIBLE_VERSION=2.3.3
+    - ANSIBLE_VERSION=2.2.3
+    - ANSIBLE_VERSION=2.1.6
+    - ANSIBLE_VERSION=2.0.2
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
 script:
   - >
-    RUBY=2.6.4 && docker run --rm -e TRAVIS -e TRAVIS_JOB_ID -e TRAVIS_BRANCH -e TRAVIS_PULL_REQUEST -it
-    -v $PWD:/app pgeraghty/ansible-ruby:$RUBY-$ANSIBLE_VERSION /bin/sh -c
-    "cd /app && bundle install --jobs=3 --retry=3 && CI=true bundle exec rake"
+    RUBY=2.6.4 && docker run --rm -e TRAVIS -e TRAVIS_JOB_ID -e TRAVIS_BRANCH -e TRAVIS_PULL_REQUEST
+    -e CC_TEST_REPORTER_ID -it -v $PWD:/app pgeraghty/ansible-ruby:$RUBY-$ANSIBLE_VERSION /bin/sh -c
+    "cd /app && bundle install --jobs=3 --retry=3 &&
+    ./cc-test-reporter before-build &&
+    CI=true bundle exec rake"
   - >
     RUBY=2.5.6 && docker run --rm -it -v $PWD:/app pgeraghty/ansible-ruby:$RUBY-$ANSIBLE_VERSION
     /bin/sh -c "cd /app && bundle install --jobs=3 --retry=3 && bundle exec rake"
@@ -31,3 +39,7 @@ script:
   - >
     RUBY=2.1.10 && docker run --rm -it -v $PWD:/app pgeraghty/ansible-ruby:$RUBY-$ANSIBLE_VERSION
     /bin/sh -c "cd /app && bundle install --jobs=3 --retry=3 && bundle exec rake"
+after_script:
+  - RUBY=2.6.4 && docker run --rm -e TRAVIS -e TRAVIS_JOB_ID -e TRAVIS_BRANCH -e TRAVIS_PULL_REQUEST
+    -e TRAVIS_TEST_RESULT -e CC_TEST_REPORTER_ID -it -v $PWD:/app pgeraghty/ansible-ruby:$RUBY-$ANSIBLE_VERSION
+    /bin/sh -c "cd /app && ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT"
