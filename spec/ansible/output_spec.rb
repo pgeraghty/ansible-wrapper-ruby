@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Ansible
-  module Output
+  describe Output do
     describe '.to_html' do
       context 'can convert ANSI escape sequence colours to HTML styles' do
         it 'ignores text without escape sequences' do
