@@ -11,7 +11,7 @@
 ## Requirements
 
 Ensure [Ansible](http://docs.ansible.com/intro_getting_started.html) is installed and available to shell commands i.e. in PATH.
-[Tested](https://travis-ci.org/pgeraghty/ansible-wrapper-ruby) with Ansible versions 2.0.2 thru 2.8.5 and Ruby 2.1+, but please create an issue if you use a version that fails.
+[Tested](https://travis-ci.org/pgeraghty/ansible-wrapper-ruby) with Ansible versions 2.0.2 thru 2.9.6 and Ruby 2.1+, but please create an issue if you use a version that fails.
 
 ## Installation
 

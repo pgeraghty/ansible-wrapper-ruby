@@ -5,9 +5,9 @@ env:
   global:
     - CC_TEST_REPORTER_ID=2c0e6ce9e61357e6f15cf76a915b3868235d93e0b849218220242e456bfaa2aa
   matrix:
-    - ANSIBLE_VERSION=2.8.5
-    - ANSIBLE_VERSION=2.7.12
-    - ANSIBLE_VERSION=2.6.19
+    - ANSIBLE_VERSION=2.8.10
+    - ANSIBLE_VERSION=2.7.16
+    - ANSIBLE_VERSION=2.6.20
     - ANSIBLE_VERSION=2.5.15
     - ANSIBLE_VERSION=2.4.6
     - ANSIBLE_VERSION=2.3.3
@@ -19,16 +19,19 @@ before_script:
   - chmod +x ./cc-test-reporter
 script:
   - >
-    RUBY=2.6.4 && docker run --rm -e TRAVIS -e TRAVIS_JOB_ID -e TRAVIS_BRANCH -e TRAVIS_PULL_REQUEST
+    RUBY=2.7.0 && docker run --rm -e TRAVIS -e TRAVIS_JOB_ID -e TRAVIS_BRANCH -e TRAVIS_PULL_REQUEST
     -e CC_TEST_REPORTER_ID -it -v $PWD:/app pgeraghty/ansible-ruby:$RUBY-$ANSIBLE_VERSION /bin/sh -c
     "cd /app && bundle install --jobs=3 --retry=3 &&
     ./cc-test-reporter before-build &&
     CI=true bundle exec rake"
   - >
-    RUBY=2.5.6 && docker run --rm -it -v $PWD:/app pgeraghty/ansible-ruby:$RUBY-$ANSIBLE_VERSION
+    RUBY=2.6.5 && docker run --rm -it -v $PWD:/app pgeraghty/ansible-ruby:$RUBY-$ANSIBLE_VERSION
     /bin/sh -c "cd /app && bundle install --jobs=3 --retry=3 && bundle exec rake"
   - >
-    RUBY=2.4.7 && docker run --rm -it -v $PWD:/app pgeraghty/ansible-ruby:$RUBY-$ANSIBLE_VERSION
+    RUBY=2.5.7 && docker run --rm -it -v $PWD:/app pgeraghty/ansible-ruby:$RUBY-$ANSIBLE_VERSION
+    /bin/sh -c "cd /app && bundle install --jobs=3 --retry=3 && bundle exec rake"
+  - >
+    RUBY=2.4.9 && docker run --rm -it -v $PWD:/app pgeraghty/ansible-ruby:$RUBY-$ANSIBLE_VERSION
     /bin/sh -c "cd /app && bundle install --jobs=3 --retry=3 && bundle exec rake"
   - >
     RUBY=2.3.7 && docker run --rm -it -v $PWD:/app pgeraghty/ansible-ruby:$RUBY-$ANSIBLE_VERSION
