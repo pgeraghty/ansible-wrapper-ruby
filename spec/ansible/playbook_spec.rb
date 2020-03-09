@@ -37,8 +37,36 @@ module Ansible
           raise_exception(Playbook::Exception, (/FAILED/ && /fatal/))) #  && /UNREACHABLE/
       end
 
-      pending 'test ignore_failures is skipped' do
-        fail
+      it 'continues to stream output despite failures' do
+        expect {
+          Playbook.stream('-i localhost, spec/fixtures/fail_playbook.yml')
+        }.to raise_exception(Playbook::Exception).and output(/PLAY RECAP/).to_stdout
+      end
+
+      context 'where ignore_errors is set for tasks' do
+        it 'skips a single failure when ignored' do
+          expect {
+            Playbook.stream('-i localhost, spec/fixtures/ignored_errors_playbook.yml') { |l| next }
+          }.not_to raise_exception
+        end
+
+        it 'skips multiple failures when they are ignored' do
+          expect {
+            Playbook.stream('-i localhost, spec/fixtures/ignored_errors_playbook.yml') { |l| next }
+          }.not_to raise_exception
+        end
+
+        it 'skips failures when they are ignored, but still reports later failures' do
+          expect {
+            Playbook.stream('-i localhost, spec/fixtures/ignored_error_then_failure_playbook.yml') { |l| next }
+          }.to raise_exception(Playbook::Exception)
+        end
+
+        it 'skips failures when they are ignored, but still reports earlier failures' do
+          expect {
+            Playbook.stream('-i localhost, spec/fixtures/failure_then_ignored_error_playbook.yml') { |l| next }
+          }.to raise_exception(Playbook::Exception)
+        end
       end
 
       it 'defaults to standard output when streaming an Ansible Playbook if no block is given' do

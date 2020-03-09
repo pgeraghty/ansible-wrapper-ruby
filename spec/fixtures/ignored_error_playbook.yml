@@ -1,0 +1,11 @@
+---
+
+- name: Ignore single failure
+  hosts: all
+  gather_facts: no
+  connection: local
+
+  tasks:
+    - name: Ignore that this file does not exist
+      shell: cat non_existent_file_20200309a
+      ignore_errors: yes

@@ -1,0 +1,14 @@
+---
+
+- name: Ignore multiple failures
+  hosts: all
+  gather_facts: no
+  connection: local
+
+  tasks:
+    - name: Ignore that this file does not exist (skipped failure 1)
+      shell: cat non_existent_file_20200309a
+      ignore_errors: yes
+    - name: Ignore that this file does not exist (skipped failure 2)
+      shell: cat non_existent_file_20200309b
+      ignore_errors: yes
