@@ -16,11 +16,13 @@ module Ansible
     end
     alias :<< :playbook
 
-    # TODO add options for stream(pb, ignore_errors: true) & stream(pb, stop_on_error: true)
     # Stream execution of a playbook using PTY because otherwise output is buffered
     # @param pb [String] path to playbook
+    # @param raise_on_failure [Symbol] Specifies if streaming should raise an exception when a Playbook failure occurs.
+    #   Defaults to +:false+, can also be +:during+ to raise as soon as an error occurs or +:after+ to allow all output to stream first.
+    # @raise [Playbook::Exception] if +raise_on_failure+ is truthy
     # @return [Integer] exit status
-    def stream(pb)
+    def stream(pb, raise_on_failure: false)
       cmd = config.to_s("#{BIN} #{pb}")
       error_at_line = {}
 
@@ -34,18 +36,28 @@ module Ansible
           block_given? ? yield(line) : puts(line)
 
           # track errors in output by line
-          # TODO allow configuration to override and trigger instant failure
-          case line
-            when /fatal: \[/ then error_at_line[line_num] ||= "FAILED: #{line}"
-            when /ERROR!/, /FAILED!/ then error_at_line[line_num] ||= "ERROR: #{line}"
-            # allow errors on previous line to be ignored
-            when /...ignoring/ then error_at_line.delete(line_num-1)
+          if raise_on_failure
+            case line
+              when /fatal: \[/ then error_at_line[line_num] ||= "FAILED: #{line}"
+              when /ERROR!/, /FAILED!/ then error_at_line[line_num] ||= "ERROR: #{line}"
+              # allow errors on previous line to be ignored
+              when /...ignoring/ then error_at_line.delete(line_num-1)
+            end
+
+            if raise_on_failure == :during
+              # trigger failure unless it was ignored
+              fatal_unskipped_error = error_at_line[line_num-1]
+              raise Playbook::Exception.new(fatal_unskipped_error) if fatal_unskipped_error
+            end
           end
         end
       end
 
-      fatal_unskipped_error = error_at_line.first
-      raise Playbook::Exception.new(fatal_unskipped_error.last) if fatal_unskipped_error
+      if raise_on_failure
+        # at this point, all output has been streamed
+        fatal_unskipped_error = error_at_line.first
+        raise Playbook::Exception.new(fatal_unskipped_error.last) if fatal_unskipped_error
+      end
 
       pid
     end

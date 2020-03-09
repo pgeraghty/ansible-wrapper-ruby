@@ -88,17 +88,23 @@ module Ansible
         end
 
         context 'for a non-existent playbook' do
+          it 'raises on failures when requested' do
+            expect {
+              Ansible.stream('-i localhost, does_not_exist.yml', raise_on_failure: :during) { next }
+            }.to raise_error(Ansible::Playbook::Exception, /ERROR! the playbook: does_not_exist.yml could not be found/)
+          end
+
           output = ''
 
-          it 'raises an error' do
+          it 'does not handle failures otherwise' do
             expect {
               Ansible.stream('-i localhost, does_not_exist.yml') do |line|
                 output << Ansible::Output.to_html(line)
               end
-            }.to raise_error(Ansible::Playbook::Exception, /ERROR! the playbook: does_not_exist.yml could not be found/)
+            }.not_to raise_error
           end
 
-          it 'outputs an error message' do
+          it 'outputs an HTML error message' do
             expect(output).to match /<span style="color: red;">ERROR! the playbook: does_not_exist.yml could not be found<\/span>/
           end
         end
