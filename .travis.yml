@@ -23,10 +23,10 @@ script:
     -e CC_TEST_REPORTER_ID -it -v $PWD:/app pgeraghty/ansible-ruby:$RUBY-$ANSIBLE_VERSION /bin/sh -c
     "cd /app && bundle install --jobs=3 --retry=3 &&
     ./cc-test-reporter before-build &&
-    CI=true bundle exec rake"
+    CI=true bundle exec rake && rm Gemfile.lock"
   - >
     RUBY=2.6.5 && docker run --rm -it -v $PWD:/app pgeraghty/ansible-ruby:$RUBY-$ANSIBLE_VERSION
-    /bin/sh -c "cd /app && bundle install --jobs=3 --retry=3 && bundle exec rake"
+    /bin/sh -c "cp -r /app /tmp/app && cd /tmp/app && bundle install --jobs=3 --retry=3 && bundle exec rake"
   - >
     RUBY=2.5.7 && docker run --rm -it -v $PWD:/app pgeraghty/ansible-ruby:$RUBY-$ANSIBLE_VERSION
     /bin/sh -c "cd /app && bundle install --jobs=3 --retry=3 && bundle exec rake"

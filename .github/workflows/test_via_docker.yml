@@ -26,7 +26,7 @@ jobs:
           ANSIBLE_VERSION: ${{ matrix.ansible }}
         run: >
           docker run --rm -v $PWD:/app pgeraghty/ansible-ruby:$RUBY_VERSION-$ANSIBLE_VERSION
-          /bin/sh -c "cd /app && bundle install --jobs=3 --retry=3 &&
+          /bin/sh -c "cp -r /app /tmp/app && cd /tmp/app && bundle install --jobs=3 --retry=3 &&
           COVERALLS_REPO_TOKEN=${{ secrets.COVERALLS_REPO_TOKEN }} COVERALLS_RUN_LOCALLY=true bundle exec rake"
 
       - name: Test against Ruby 2.6.5
@@ -35,7 +35,7 @@ jobs:
           ANSIBLE_VERSION: ${{ matrix.ansible }}
         run: >
           docker run --rm -v $PWD:/app pgeraghty/ansible-ruby:$RUBY_VERSION-$ANSIBLE_VERSION
-          /bin/sh -c "cd /app && bundle install --jobs=3 --retry=3 && bundle exec rake"
+          /bin/sh -c "cp -r /app /tmp/app && cd /tmp/app && bundle install --jobs=3 --retry=3 && bundle exec rake"
 
       - name: Test against Ruby 2.5.7
         env:
@@ -43,7 +43,7 @@ jobs:
           ANSIBLE_VERSION: ${{ matrix.ansible }}
         run: >
           docker run --rm -v $PWD:/app pgeraghty/ansible-ruby:$RUBY_VERSION-$ANSIBLE_VERSION
-          /bin/sh -c "cd /app && bundle install --jobs=3 --retry=3 && bundle exec rake"
+          /bin/sh -c "cp -r /app /tmp/app && cd /tmp/app && bundle install --jobs=3 --retry=3 && bundle exec rake"
 
       - name: Test against Ruby 2.4.9
         env:
@@ -51,7 +51,7 @@ jobs:
           ANSIBLE_VERSION: ${{ matrix.ansible }}
         run: >
           docker run --rm -v $PWD:/app pgeraghty/ansible-ruby:$RUBY_VERSION-$ANSIBLE_VERSION
-          /bin/sh -c "cd /app && bundle install --jobs=3 --retry=3 && bundle exec rake"
+          /bin/sh -c "cp -r /app /tmp/app && cd /tmp/app && bundle install --jobs=3 --retry=3 && bundle exec rake"
 
       - name: Test against Ruby 2.3.7
         env:
@@ -59,7 +59,7 @@ jobs:
           ANSIBLE_VERSION: ${{ matrix.ansible }}
         run: >
           docker run --rm -v $PWD:/app pgeraghty/ansible-ruby:$RUBY_VERSION-$ANSIBLE_VERSION
-          /bin/sh -c "cd /app && bundle install --jobs=3 --retry=3 && bundle exec rake"
+          /bin/sh -c "cp -r /app /tmp/app && cd /tmp/app && bundle install --jobs=3 --retry=3 && bundle exec rake"
 
       - name: Test against Ruby 2.2.7
         env:
@@ -67,7 +67,7 @@ jobs:
           ANSIBLE_VERSION: ${{ matrix.ansible }}
         run: >
           docker run --rm -v $PWD:/app pgeraghty/ansible-ruby:$RUBY_VERSION-$ANSIBLE_VERSION
-          /bin/sh -c "cd /app && bundle install --jobs=3 --retry=3 && bundle exec rake"
+          /bin/sh -c "cp -r /app /tmp/app && cd /tmp/app && bundle install --jobs=3 --retry=3 && bundle exec rake"
 
       - name: Test against Ruby 2.1.10
         env:
@@ -75,4 +75,4 @@ jobs:
           ANSIBLE_VERSION: ${{ matrix.ansible }}
         run: >
           docker run --rm -v $PWD:/app pgeraghty/ansible-ruby:$RUBY_VERSION-$ANSIBLE_VERSION
-          /bin/sh -c "cd /app && bundle install --jobs=3 --retry=3 && bundle exec rake"
+          /bin/sh -c "cp -r /app /tmp/app && cd /tmp/app && bundle install --jobs=3 --retry=3 && bundle exec rake"
