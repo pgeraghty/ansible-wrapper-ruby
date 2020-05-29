@@ -38,7 +38,7 @@ module Ansible
           # track errors in output by line
           if raise_on_failure
             case line
-              when /fatal: \[/ then error_at_line[line_num] ||= "FAILED: #{line}"
+              when /(fatal|failed): \[/ then error_at_line[line_num] ||= "FAILED: #{line}"
               when /ERROR!/, /FAILED!/ then error_at_line[line_num] ||= "ERROR: #{line}"
               # allow errors on previous line to be ignored
               when /...ignoring/ then error_at_line.delete(line_num-1)
